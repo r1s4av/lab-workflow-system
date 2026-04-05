@@ -1,5 +1,27 @@
-/node_modules
-/vendor
-.env
-*.log
+# OS files
 .DS_Store
+Thumbs.db
+
+# XAMPP / Local server
+/xampp/
+/apache/
+/mysql/
+
+# Environment files
+.env
+
+# Logs
+*.log
+
+# Cache / temp
+.cache/
+tmp/
+
+# Uploads (if any)
+/uploads/
+
+# Node (if used later)
+node_modules/
+
+# Vendor (only if you later use composer)
+vendor/
