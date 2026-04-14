@@ -113,10 +113,6 @@ if (session_status() === PHP_SESSION_NONE) {
 
 </div>
 
-<div class="progress mt-3">
-    <div class="progress-bar bg-success" style="width: <?= $percent ?>%"></div>
-</div>
-
 <div id="loader">
     <div class="spinner"></div>
 </div>
