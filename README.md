@@ -86,61 +86,47 @@ lab-workflow/
 
 ### Home Page
 
-```md
-![Home Page](screenshots/home1.png)
-![Home Page](screenshots/home2.png)
+![Home Page](/screenshots/home1.png)
 
-```
+![Home Page](/screenshots/home2.png)
+
 ---
-
 
 ### Login Page
 
-```md
-![Login Page](screenshots/login.png)
-```
+![Login Page](/screenshots/login.png)
 
 ---
 
 ### Dashboard
 
-```md
-![Dashboard](screenshots/dashboard.png)
-```
+![Dashboard](/screenshots/dashboard.png)
 
 ---
 
 ### Patient Registration
 
-```md
-![Patient Registration](screenshots/add_patient.png)
-```
+![Patient Registration](/screenshots/add_patient.png)
 
 ---
 
 ### Sample Management
 
-```md
-![Sample Management](screenshots/add-sample.png)
-```
+![Sample Management](/screenshots/add-sample.png)
 
 ---
 
 ### Technician Workflow
 
-```md
-![Technician Workflow](screenshots/tech.png)
-```
+![Technician Workflow](/screenshots/tech.png)
 
 ---
 
 ### Doctor Report Approval
 
-```md
-![Doctor Approval](screenshots/doc.png)
-```
+![Doctor Approval](/screenshots/doc.png)
 
----
+
 
 ## Learning Outcomes
 
