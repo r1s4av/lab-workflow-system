@@ -1,20 +1,32 @@
-# Lab Workflow Management System
+# Lab Workflow Interface
 
-A role-based web application for managing laboratory operations.
+Frontend-based laboratory workflow management interface designed to simulate the workflow of diagnostic laboratory operations.
 
 ## Features
-- Patient registration
-- Sample creation
-- Test assignment
-- Result entry by technician
-- Report approval by doctor
+- Patient registration interface
+- Sample tracking pages
+- Test management interface
+- Report viewing and approval pages
+- Role-based workflow structure
 
-## Tech Stack
-- PHP
-- MySQL
+## Technologies Used
+- HTML
+- CSS
 - Bootstrap
+- XAMPP (local environment)
 
-## Roles
+## Project Structure
+The project contains separate interfaces for:
 - Receptionist
 - Technician
 - Doctor
+
+## Purpose
+This project was created to understand:
+- workflow-based system design,
+- frontend page structuring,
+- role-based navigation,
+- and basic healthcare management processes.
+
+## Author
+Rishav Thakur
