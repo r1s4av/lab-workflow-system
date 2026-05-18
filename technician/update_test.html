@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Update Test Result | LabFlow Nexus</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Segoe UI',sans-serif;background:linear-gradient(135deg,#0a0f1f,#0f172a);color:#fff;}
+
+/* Sidebar */
+.sidebar{position:fixed;left:0;top:0;width:250px;height:100vh;background:rgba(10,25,47,0.95);backdrop-filter:blur(12px);padding:1.5rem;border-right:1px solid rgba(34,197,94,0.2);}
+.logo-title{font-size:1.2rem;font-weight:700;color:#fff;}
+.logo-sub{font-size:0.65rem;color:#94a3b8;}
+.sidebar nav a{display:flex;align-items:center;gap:0.7rem;padding:0.7rem 1rem;color:#cbd5e6;text-decoration:none;border-radius:0.8rem;margin-bottom:0.3rem;transition:all 0.3s;}
+.sidebar nav a:hover,.sidebar nav a.active{background:rgba(34,197,94,0.15);color:#22c55e;transform:translateX(5px);}
+.sidebar-footer{margin-top:auto;padding-top:1rem;border-top:1px solid rgba(255,255,255,0.1);}
+.sidebar-footer a{display:flex;align-items:center;gap:0.7rem;color:#ef4444;text-decoration:none;padding:0.7rem 1rem;transition:0.3s;}
+.sidebar-footer a:hover{background:rgba(239,68,68,0.15);transform:translateX(5px);}
+
+/* Topbar */
+.topbar{margin-left:250px;height:60px;background:rgba(15,25,45,0.8);backdrop-filter:blur(12px);display:flex;align-items:center;justify-content:space-between;padding:0 2rem;border-bottom:1px solid rgba(34,197,94,0.2);}
+.page-title{font-size:1.2rem;font-weight:600;color:#fff;}
+.user-info{display:flex;align-items:center;gap:0.8rem;}
+.avatar{width:35px;height:35px;background:#22c55e;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;transition:0.3s;}
+.avatar:hover{transform:scale(1.1);}
+.role-badge{background:rgba(34,197,94,0.2);padding:0.3rem 0.8rem;border-radius:2rem;font-size:0.75rem;color:#22c55e;}
+
+/* Main Content */
+.main-content{margin-left:250px;padding:1.5rem;animation:fadeIn 0.5s ease;}
+@keyframes fadeIn{from{opacity:0;transform:translateY(20px);}to{opacity:1;transform:translateY(0);}}
+
+/* Card */
+.card{background:rgba(15,25,45,0.6);border-radius:1rem;border:1px solid rgba(255,255,255,0.08);padding:1.8rem;backdrop-filter:blur(10px);max-width:600px;margin:0 auto;}
+
+/* Form Controls - Enhanced Visibility */
+.form-group{margin-bottom:1.2rem;}
+.form-group label{color:#cbd5e6;font-size:0.85rem;margin-bottom:0.4rem;display:block;font-weight:500;}
+.form-group label i{margin-right:0.5rem;color:#22c55e;}
+
+.form-control{
+    background:#1e293b;
+    border:1px solid #475569;
+    color:#ffffff;
+    border-radius:0.6rem;
+    padding:0.7rem 1rem;
+    width:100%;
+    font-size:0.9rem;
+    transition:all 0.3s;
+}
+.form-control:focus{
+    border-color:#22c55e;
+    box-shadow:0 0 0 3px rgba(34,197,94,0.2);
+    outline:none;
+    background:#0f172a;
+}
+.form-control:disabled{
+    background:#0f172a;
+    border-color:#334155;
+    color:#94a3b8;
+    cursor:not-allowed;
+}
+.form-control::placeholder{
+    color:#64748b;
+    font-size:0.85rem;
+}
+
+/* Buttons */
+.btn{
+    border-radius:0.8rem;
+    font-weight:600;
+    padding:0.7rem 1.5rem;
+    transition:all 0.3s;
+    margin-right:0.5rem;
+}
+.btn-success{
+    background:linear-gradient(135deg,#22c55e,#16a34a);
+    border:none;
+    color:#fff;
+}
+.btn-success:hover{
+    background:linear-gradient(135deg,#16a34a,#15803d);
+    transform:translateY(-2px);
+    box-shadow:0 5px 15px rgba(34,197,94,0.4);
+}
+.btn-secondary{
+    background:#334155;
+    border:none;
+    color:#e2e8f0;
+    text-decoration:none;
+    display:inline-block;
+}
+.btn-secondary:hover{
+    background:#475569;
+    transform:translateY(-2px);
+}
+
+/* Loader */
+.loader-overlay{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(10,25,47,0.95);display:flex;align-items:center;justify-content:center;z-index:9999;}
+.loader-spinner{width:50px;height:50px;border:4px solid rgba(34,197,94,0.2);border-top-color:#22c55e;border-radius:50%;animation:spin 0.8s linear infinite;}
+@keyframes spin{to{transform:rotate(360deg);}}
+
+/* Toast */
+.toast-msg{position:fixed;bottom:1.5rem;right:1.5rem;background:#1a3a2e;color:#4ade80;padding:0.7rem 1.2rem;border-radius:0.8rem;z-index:3000;transform:translateX(120%);transition:0.3s;box-shadow:0 5px 15px rgba(0,0,0,0.3);}
+.toast-msg.show{transform:translateX(0);}
+
+/* Page Header */
+.page-header{margin-bottom:1.5rem;}
+.page-header h3{color:#ffffff;font-weight:700;}
+.page-header h3 i{color:#22c55e;margin-right:0.5rem;}
+
+/* Responsive */
+@media(max-width:768px){.sidebar{transform:translateX(-100%);}.topbar,.main-content{margin-left:0;}.card{margin:0;}}
+</style>
+</head>
+<body>
+
+<div id="loaderOverlay" class="loader-overlay"><div class="loader-spinner"></div></div>
+
+<div class="sidebar">
+    <div class="logo"><div><div class="logo-title">LabFlow Nexus</div><div class="logo-sub">Lab System</div></div></div>
+    <nav>
+        <a href="../dashboard.html"><i class="bi bi-speedometer2"></i><span>Dashboard</span></a>
+        <a href="view_tests.html" class="active"><i class="bi bi-clipboard-data"></i><span>View Tests</span></a>
+    </nav>
+    <div class="sidebar-footer"><a href="../logout.html"><i class="bi bi-box-arrow-right"></i><span>Logout</span></a></div>
+</div>
+
+<div class="topbar">
+    <div class="page-title"><i class="bi bi-pencil-square me-2" style="color:#22c55e;"></i>Laboratory Workflow System</div>
+    <div class="user-info"><div class="avatar" id="userAvatar">T</div><span class="role-badge" id="userRole">Technician</span></div>
+</div>
+
+<div class="main-content">
+    <div class="page-header">
+        <h3><i class="bi bi-pencil-square"></i> Update Test Result</h3>
+        <p class="text-muted" style="color:#94a3b8 !important;">Enter the test result value below</p>
+    </div>
+
+    <div class="card">
+        <form id="updateForm">
+            <input type="hidden" id="testId">
+            
+            <div class="form-group">
+                <label><i class="bi bi-person-circle"></i> Patient Name</label>
+                <input type="text" id="patientName" class="form-control" disabled>
+            </div>
+            
+            <div class="form-group">
+                <label><i class="bi bi-microscope"></i> Test Name</label>
+                <input type="text" id="testName" class="form-control" disabled>
+            </div>
+            
+            <div class="form-group">
+                <label><i class="bi bi-file-text"></i> Result Value</label>
+                <input type="text" id="resultValue" class="form-control" placeholder="Enter test result (e.g., Positive, 120 mg/dL, Normal)" required>
+                <small class="text-muted" style="color:#64748b !important; font-size:0.7rem; margin-top:0.3rem; display:block;">
+                    <i class="bi bi-info-circle"></i> Enter the complete test result
+                </small>
+            </div>
+            
+            <div class="mt-4 d-flex gap-2">
+                <button type="submit" class="btn btn-success"><i class="bi bi-save me-1"></i> Save Result</button>
+                <a href="view_tests.html" class="btn btn-secondary"><i class="bi bi-x-circle me-1"></i> Cancel</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div id="toastMsg" class="toast-msg"></div>
+
+<script>
+const role=sessionStorage.getItem('user_role');
+if(!role||role!=='Technician') window.location.href='../login.html';
+document.getElementById('userAvatar').innerText='T';
+document.getElementById('userRole').innerText='Technician';
+
+const urlParams=new URLSearchParams(window.location.search);
+const testId=urlParams.get('id');
+if(!testId) window.location.href='view_tests.html';
+
+function showToast(msg,isErr=false){
+    const t=document.getElementById('toastMsg');
+    t.innerText=msg;
+    t.style.background=isErr?'#3a1a1a':'#1a3a2e';
+    t.style.color=isErr?'#f87171':'#4ade80';
+    t.classList.add('show');
+    setTimeout(()=>t.classList.remove('show'),3000);
+}
+
+async function loadTestDetails(){
+    try{
+        const res=await fetch('/api/tests');
+        const data=await res.json();
+        if(data.success){
+            const test=data.tests.find(t=>t.sample_test_id==testId);
+            if(test){
+                document.getElementById('testId').value=test.sample_test_id;
+                document.getElementById('patientName').value=test.patient_name;
+                document.getElementById('testName').value=test.test_name;
+                document.getElementById('resultValue').value=test.result_value||'';
+            }else{
+                showToast('Test not found',true);
+                setTimeout(()=>window.location.href='view_tests.html',1500);
+            }
+        }
+    }catch(e){showToast('Error loading test details',true);}
+}
+
+document.getElementById('updateForm').addEventListener('submit',async(e)=>{
+    e.preventDefault();
+    const val=document.getElementById('resultValue').value.trim();
+    if(!val){
+        showToast('Please enter result value',true);
+        document.getElementById('resultValue').focus();
+        return;
+    }
+    const loader=document.getElementById('loaderOverlay');
+    loader.style.display='flex';
+    try{
+        const res=await fetch('/api/update-test',{
+            method:'POST',
+            headers:{'Content-Type':'application/json'},
+            body:JSON.stringify({id:testId,result_value:val})
+        });
+        const data=await res.json();
+        if(data.success){
+            showToast('Test result updated successfully!');
+            setTimeout(()=>window.location.href='view_tests.html?success=1',1000);
+        }else showToast('Error: '+data.error,true);
+    }catch(e){showToast('Connection error. Make sure server is running',true);}
+    finally{setTimeout(()=>loader.style.display='none',500);}
+});
+
+window.onload=()=>{loadTestDetails();setTimeout(()=>{const l=document.getElementById('loaderOverlay');if(l)l.style.display='none';},400);};
+</script>
+</body>
+</html>

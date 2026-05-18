@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+<title>Database Configuration | LabFlow Nexus</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    min-height: 100vh;
+    background: radial-gradient(circle at 10% 20%, #0a192f, #0b1120);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    overflow-x: hidden;
+    padding: 1.5rem;
+}
+
+body::before {
+    content: "";
+    position: fixed;
+    width: 80vw;
+    height: 80vw;
+    background: radial-gradient(circle, rgba(56, 189, 248, 0.2), rgba(2, 84, 132, 0) 70%);
+    filter: blur(100px);
+    top: -30%;
+    right: -20%;
+    z-index: 0;
+    pointer-events: none;
+}
+
+body::after {
+    content: "";
+    position: fixed;
+    width: 70vw;
+    height: 70vw;
+    background: radial-gradient(circle, rgba(74, 222, 128, 0.12), rgba(20, 83, 45, 0) 70%);
+    filter: blur(120px);
+    bottom: -25%;
+    left: -20%;
+    z-index: 0;
+    pointer-events: none;
+}
+
+.db-container {
+    width: 100%;
+    max-width: 560px;
+    z-index: 2;
+    animation: fadeInUp 0.6s ease-out;
+}
+
+.db-card {
+    background: rgba(15, 25, 45, 0.7);
+    backdrop-filter: blur(18px);
+    border-radius: 2rem;
+    padding: 2.5rem;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 25px 45px -12px rgba(0, 0, 0, 0.4);
+}
+
+.icon-circle {
+    width: 70px;
+    height: 70px;
+    background: linear-gradient(135deg, rgba(34, 197, 94, 0.2), rgba(22, 163, 74, 0.1));
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1.5rem auto;
+    border: 1px solid rgba(34, 197, 94, 0.3);
+}
+
+.icon-circle i {
+    font-size: 2.5rem;
+    color: #22c55e;
+}
+
+.db-title {
+    font-size: 1.8rem;
+    font-weight: 800;
+    background: linear-gradient(135deg, #ffffff, #94a3f8);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    text-align: center;
+    margin-bottom: 0.5rem;
+}
+
+.db-subtitle {
+    text-align: center;
+    color: #6c86a3;
+    font-size: 0.85rem;
+    margin-bottom: 2rem;
+}
+
+.config-item {
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 1rem;
+    padding: 1rem;
+    margin-bottom: 0.75rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.config-label {
+    font-weight: 600;
+    color: #94a3b8;
+    font-size: 0.85rem;
+}
+
+.config-value {
+    font-family: monospace;
+    color: #4ade80;
+    font-weight: 500;
+    font-size: 0.9rem;
+    background: rgba(0, 0, 0, 0.4);
+    padding: 0.25rem 0.75rem;
+    border-radius: 0.5rem;
+}
+
+.status-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: rgba(34, 197, 94, 0.15);
+    padding: 0.5rem 1rem;
+    border-radius: 2rem;
+    margin-top: 1rem;
+    justify-content: center;
+}
+
+.status-connected {
+    color: #22c55e;
+    font-weight: 600;
+    font-size: 0.85rem;
+}
+
+.status-dot {
+    width: 8px;
+    height: 8px;
+    background: #22c55e;
+    border-radius: 50%;
+    animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(1.2); }
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.db-note {
+    text-align: center;
+    font-size: 0.7rem;
+    color: #5a6e8a;
+    margin-top: 1.5rem;
+    padding-top: 1rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+@media (max-width: 500px) {
+    .db-card {
+        padding: 1.8rem;
+    }
+    .db-title {
+        font-size: 1.4rem;
+    }
+    .config-value {
+        font-size: 0.75rem;
+    }
+}
+</style>
+</head>
+<body>
+
+<div class="db-container">
+    <div class="db-card">
+        <div class="icon-circle">
+            <i class="fas fa-database"></i>
+        </div>
+        
+        <h1 class="db-title">Database Configuration</h1>
+        <div class="db-subtitle">Connection parameters</div>
+        
+        <div class="config-item">
+            <span class="config-label"><i class="fas fa-server me-2"></i>Host</span>
+            <span class="config-value">localhost</span>
+        </div>
+        
+        <div class="config-item">
+            <span class="config-label"><i class="fas fa-user me-2"></i>Username</span>
+            <span class="config-value">root</span>
+        </div>
+        
+        <div class="config-item">
+            <span class="config-label"><i class="fas fa-lock me-2"></i>Password</span>
+            <span class="config-value">[empty]</span>
+        </div>
+        
+        <div class="config-item">
+            <span class="config-label"><i class="fas fa-table me-2"></i>Database</span>
+            <span class="config-value">lab_workflow_db</span>
+        </div>
+        
+        <div class="status-badge">
+            <span class="status-dot"></span>
+            <span class="status-connected">Connection Ready</span>
+        </div>
+        
+        <div class="db-note">
+            <i class="fas fa-info-circle me-1"></i> Configuration loaded successfully
+        </div>
+    </div>
+</div>
+
+<script>
+    const dbConfig = {
+        host: "localhost",
+        user: "root",
+        password: "",
+        database: "lab_workflow_db"
+    };
+    
+    console.log("Database configuration loaded:", dbConfig.database);
+    
+    sessionStorage.setItem('db_host', dbConfig.host);
+    sessionStorage.setItem('db_name', dbConfig.database);
+</script>
+
+</body>
+</html>

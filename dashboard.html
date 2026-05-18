@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dashboard | LabFlow Nexus</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+body{
+    font-family:'Segoe UI',sans-serif;
+    background:linear-gradient(135deg,#0a0f1f,#0f172a);
+    color:#fff;
+}
+.sidebar{
+    position:fixed;left:0;top:0;width:250px;height:100vh;
+    background:rgba(10,25,47,0.95);backdrop-filter:blur(12px);
+    padding:1.5rem;border-right:1px solid rgba(34,197,94,0.2);
+}
+.logo-title{font-size:1.2rem;font-weight:700;color:#fff;}
+.logo-sub{font-size:0.65rem;color:#94a3b8;}
+.sidebar nav a{
+    display:flex;align-items:center;gap:0.7rem;padding:0.7rem 1rem;
+    color:#cbd5e6;text-decoration:none;border-radius:0.8rem;margin-bottom:0.3rem;
+}
+.sidebar nav a:hover,.sidebar nav a.active{background:rgba(34,197,94,0.15);color:#22c55e;}
+.sidebar-footer{margin-top:auto;padding-top:1rem;border-top:1px solid rgba(255,255,255,0.1);}
+.sidebar-footer a{display:flex;align-items:center;gap:0.7rem;color:#ef4444;text-decoration:none;padding:0.7rem 1rem;}
+.topbar{
+    margin-left:250px;height:60px;background:rgba(15,25,45,0.8);backdrop-filter:blur(12px);
+    display:flex;align-items:center;justify-content:space-between;padding:0 2rem;
+    border-bottom:1px solid rgba(34,197,94,0.2);
+}
+.page-title{font-size:1.2rem;font-weight:600;color:#fff;}
+.user-info{display:flex;align-items:center;gap:0.8rem;}
+.avatar{width:35px;height:35px;background:#22c55e;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;}
+.role-badge{background:rgba(34,197,94,0.2);padding:0.3rem 0.8rem;border-radius:2rem;font-size:0.75rem;color:#22c55e;}
+.main-content{margin-left:250px;padding:1.5rem;}
+.dashboard-card{background:rgba(15,25,45,0.6);border-radius:1rem;padding:1.2rem;border:1px solid rgba(255,255,255,0.08);transition:0.3s;}
+.dashboard-card:hover{transform:translateY(-3px);}
+.dashboard-card p{color:#cbd5e6;font-size:0.75rem;margin-bottom:0.3rem;letter-spacing:0.5px;}
+.dashboard-card h2{font-size:2rem;font-weight:700;margin:0;}
+.card-blue h2{color:#60a5fa;}
+.card-orange h2{color:#fbbf24;}
+.card-green h2{color:#4ade80;}
+.card-purple h2{color:#c084fc;}
+.card{background:rgba(15,25,45,0.7);border-radius:1rem;border:1px solid rgba(255,255,255,0.1);}
+.card h6{color:#e2e8f0 !important;font-weight:600;}
+.card h3{color:#4ade80 !important;}
+.card h5{color:#ffffff !important;font-weight:700;}
+.progress{background:rgba(255,255,255,0.15);border-radius:1rem;height:8px;}
+.progress-bar{background:#22c55e;border-radius:1rem;}
+.list-group-item{background:rgba(15,25,45,0.5);border-color:rgba(255,255,255,0.08);color:#e2e8f0;}
+.list-group-item strong{color:#ffffff;}
+.list-group-item small{color:#94a3b8;}
+.badge.bg-light{background:#1e293b !important;color:#4ade80 !important;}
+.btn{border-radius:0.8rem;font-weight:600;padding:0.7rem;}
+.btn-primary{background:#3b82f6;border:none;}
+.btn-primary:hover{background:#2563eb;}
+.btn-warning{background:#f59e0b;border:none;color:#fff;}
+.btn-warning:hover{background:#d97706;}
+.btn-success{background:#22c55e;border:none;}
+.btn-success:hover{background:#16a34a;}
+.btn-dark{background:#1e293b;border:none;}
+.btn-dark:hover{background:#334155;}
+.empty-state{text-align:center;padding:1.5rem;color:#94a3b8;}
+.loader-overlay{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(10,25,47,0.95);display:flex;align-items:center;justify-content:center;z-index:9999;}
+.loader-spinner{width:50px;height:50px;border:4px solid rgba(34,197,94,0.2);border-top-color:#22c55e;border-radius:50%;animation:spin 0.8s linear infinite;}
+@keyframes spin{to{transform:rotate(360deg);}}
+.toast-msg{position:fixed;bottom:1.5rem;right:1.5rem;background:#1a3a2e;color:#4ade80;padding:0.7rem 1.2rem;border-radius:0.8rem;z-index:3000;transform:translateX(120%);transition:0.3s;}
+.toast-msg.show{transform:translateX(0);}
+.text-muted{color:#94a3b8 !important;}
+@media(max-width:768px){.sidebar{transform:translateX(-100%);}.topbar,.main-content{margin-left:0;}}
+</style>
+</head>
+<body>
+
+<div id="loaderOverlay" class="loader-overlay"><div class="loader-spinner"></div></div>
+
+<div class="sidebar">
+    <div class="logo">
+        <div><div class="logo-title">LabFlow Nexus</div><div class="logo-sub">Lab System</div></div>
+    </div>
+    <nav>
+        <a href="dashboard.html" class="active"><i class="bi bi-speedometer2"></i><span>Dashboard</span></a>
+        <a href="receptionist/add_patient.html" id="navAddPatient" style="display:none;"><i class="bi bi-person-plus"></i><span>Add Patient</span></a>
+        <a href="receptionist/add_sample.html" id="navAddSample" style="display:none;"><i class="bi bi-droplet-half"></i><span>Add Sample</span></a>
+        <a href="technician/view_tests.html" id="navViewTests" style="display:none;"><i class="bi bi-clipboard-data"></i><span>View Tests</span></a>
+        <a href="doctor/view_reports.html" id="navViewReports" style="display:none;"><i class="bi bi-file-earmark-medical"></i><span>View Reports</span></a>
+    </nav>
+    <div class="sidebar-footer"><a href="logout.html"><i class="bi bi-box-arrow-right"></i><span>Logout</span></a></div>
+</div>
+
+<div class="topbar">
+    <div class="page-title">Laboratory Workflow System</div>
+    <div class="user-info"><div class="avatar" id="userAvatar">D</div><span class="role-badge" id="userRole">Doctor</span></div>
+</div>
+
+<div class="main-content">
+    <h2 class="fw-bold" style="color:#ffffff;">Dashboard</h2>
+    <p class="mb-3" style="color:#94a3b8;">System Overview & Insights</p>
+
+    <div class="row g-3">
+        <div class="col-md-3"><div class="dashboard-card card-blue"><p>Total Patients</p><h2 id="totalPatients">0</h2></div></div>
+        <div class="col-md-3"><div class="dashboard-card card-orange"><p>Samples</p><h2 id="totalSamples">0</h2></div></div>
+        <div class="col-md-3"><div class="dashboard-card card-green"><p>Reports</p><h2 id="totalReports">0</h2></div></div>
+        <div class="col-md-3"><div class="dashboard-card card-purple"><p>Pending Tests</p><h2 id="pendingTests">0</h2></div></div>
+    </div>
+
+    <div class="row mt-3 g-3">
+        <div class="col-md-4">
+            <div class="card p-3">
+                <h6 class="fw-bold mb-2" style="color:#e2e8f0;">📊 Completion Rate</h6>
+                <h3 class="fw-bold" id="completionText" style="color:#4ade80;">0 / 0</h3>
+                <div class="progress mt-2"><div class="progress-bar" id="completionBar" style="width:0%"></div></div>
+            </div>
+        </div>
+        <div class="col-md-8">
+            <div class="card p-3">
+                <h5 class="fw-bold mb-2" style="color:#ffffff;"><i class="bi bi-activity me-2" style="color:#22c55e;"></i> Recent Activity</h5>
+                <div id="recentActivityList"><div class="empty-state">Loading...</div></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="mt-4">
+        <h4 class="fw-bold mb-2" style="color:#ffffff;">⚡ Quick Actions</h4>
+        <div class="row g-2" id="quickActions"></div>
+    </div>
+</div>
+
+<div id="toastMsg" class="toast-msg"></div>
+
+<script>
+const role = sessionStorage.getItem('user_role');
+const username = sessionStorage.getItem('username');
+if(!role) window.location.href='login.html';
+
+document.getElementById('userAvatar').innerText=role.charAt(0);
+document.getElementById('userRole').innerText=role;
+
+if(role==='Receptionist'){
+    document.getElementById('navAddPatient').style.display='flex';
+    document.getElementById('navAddSample').style.display='flex';
+}else if(role==='Technician'){
+    document.getElementById('navViewTests').style.display='flex';
+}else if(role==='Doctor'){
+    document.getElementById('navViewReports').style.display='flex';
+}
+
+async function loadDashboard(){
+    try{
+        const res=await fetch('/api/dashboard');
+        const data=await res.json();
+        if(data.success){
+            document.getElementById('totalPatients').innerText=data.total_patients;
+            document.getElementById('totalSamples').innerText=data.total_samples;
+            document.getElementById('totalReports').innerText=data.total_reports;
+            document.getElementById('pendingTests').innerText=data.pending_tests;
+            const total=data.completed_tests+data.pending_tests;
+            const percent=total>0?(data.completed_tests/total)*100:0;
+            document.getElementById('completionText').innerText=`${data.completed_tests} / ${total}`;
+            document.getElementById('completionBar').style.width=`${percent}%`;
+            if(data.recent_activity?.length){
+                document.getElementById('recentActivityList').innerHTML=`<ul class="list-group list-group-flush">${data.recent_activity.map(a=>`<li class="list-group-item d-flex justify-content-between align-items-center"><div><strong>${a.patient_name}</strong><br><small class="text-muted">Sample #${a.sample_id}</small></div><span class="badge" style="background:#1e293b;color:#4ade80;padding:0.3rem 0.8rem;border-radius:2rem;">${a.performed_at?new Date(a.performed_at).toLocaleDateString():'Pending'}</span></li>`).join('')}</ul>`;
+            }else{
+                document.getElementById('recentActivityList').innerHTML='<div class="empty-state">No recent activity</div>';
+            }
+        }
+    }catch(e){showToast('Error loading data',true);}
+}
+
+const actions=document.getElementById('quickActions');
+if(role==='Receptionist'){
+    actions.innerHTML=`<div class="col-md-4"><a href="receptionist/add_patient.html" class="btn btn-primary w-100 p-2"><i class="bi bi-person-plus me-2"></i> Register Patient</a></div><div class="col-md-4"><a href="receptionist/add_sample.html" class="btn btn-warning w-100 p-2"><i class="bi bi-droplet-half me-2"></i> Create Sample</a></div>`;
+}else if(role==='Technician'){
+    actions.innerHTML=`<div class="col-md-4"><a href="technician/view_tests.html" class="btn btn-success w-100 p-2"><i class="bi bi-clipboard-data me-2"></i> Perform Tests</a></div>`;
+}else if(role==='Doctor'){
+    actions.innerHTML=`<div class="col-md-4"><a href="doctor/view_reports.html" class="btn btn-dark w-100 p-2"><i class="bi bi-file-earmark-medical me-2"></i> Approve Reports</a></div>`;
+}
+
+function showToast(msg,isErr=false){
+    const t=document.getElementById('toastMsg');
+    t.innerText=msg;
+    t.style.background=isErr?'#3a1a1a':'#1a3a2e';
+    t.style.color=isErr?'#f87171':'#4ade80';
+    t.classList.add('show');
+    setTimeout(()=>t.classList.remove('show'),3000);
+}
+
+window.onload=()=>{
+    setTimeout(()=>{const l=document.getElementById('loaderOverlay');if(l)l.style.display='none';},500);
+    loadDashboard();
+    showToast(`Welcome back, ${username}`);
+};
+</script>
+</body>
+</html>

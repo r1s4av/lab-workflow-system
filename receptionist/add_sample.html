@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Create Sample | LabFlow Nexus</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Segoe UI',sans-serif;background:linear-gradient(135deg,#0a0f1f,#0f172a);color:#fff;}
+.sidebar{position:fixed;left:0;top:0;width:250px;height:100vh;background:rgba(10,25,47,0.95);backdrop-filter:blur(12px);padding:1.5rem;border-right:1px solid rgba(34,197,94,0.2);}
+.logo-title{font-size:1.2rem;font-weight:700;color:#fff;}
+.logo-sub{font-size:0.65rem;color:#94a3b8;}
+.sidebar nav a{display:flex;align-items:center;gap:0.7rem;padding:0.7rem 1rem;color:#cbd5e6;text-decoration:none;border-radius:0.8rem;margin-bottom:0.3rem;}
+.sidebar nav a:hover,.sidebar nav a.active{background:rgba(34,197,94,0.15);color:#22c55e;}
+.sidebar-footer{margin-top:auto;padding-top:1rem;border-top:1px solid rgba(255,255,255,0.1);}
+.sidebar-footer a{display:flex;align-items:center;gap:0.7rem;color:#ef4444;text-decoration:none;padding:0.7rem 1rem;}
+.topbar{margin-left:250px;height:60px;background:rgba(15,25,45,0.8);backdrop-filter:blur(12px);display:flex;align-items:center;justify-content:space-between;padding:0 2rem;border-bottom:1px solid rgba(34,197,94,0.2);}
+.page-title{font-size:1.2rem;font-weight:600;color:#fff;}
+.user-info{display:flex;align-items:center;gap:0.8rem;}
+.avatar{width:35px;height:35px;background:#22c55e;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;}
+.role-badge{background:rgba(34,197,94,0.2);padding:0.3rem 0.8rem;border-radius:2rem;font-size:0.75rem;color:#22c55e;}
+.main-content{margin-left:250px;padding:1.5rem;}
+.main-content h3{color:#ffffff;}
+.card{background:rgba(15,25,45,0.7);border-radius:1rem;border:1px solid rgba(255,255,255,0.1);}
+.form-control,.form-select{
+    background:#1e293b;
+    border:1px solid #475569;
+    color:#ffffff;
+    border-radius:0.6rem;
+    padding:0.6rem;
+}
+.form-control:focus,.form-select:focus{
+    border-color:#22c55e;
+    box-shadow:0 0 0 2px rgba(34,197,94,0.2);
+    outline:none;
+}
+.form-control::placeholder{
+    color:#94a3b8;
+}
+.form-select option{
+    background:#1e293b;
+    color:#ffffff;
+}
+label{
+    color:#cbd5e6;
+    font-size:0.8rem;
+    margin-bottom:0.3rem;
+    display:block;
+    font-weight:500;
+}
+.btn{
+    border-radius:0.8rem;
+    font-weight:600;
+    padding:0.6rem 1.2rem;
+    transition:0.2s;
+}
+.btn-success{
+    background:#22c55e;
+    border:none;
+    color:#fff;
+}
+.btn-success:hover{
+    background:#16a34a;
+    transform:translateY(-1px);
+}
+.btn-light{
+    background:#334155;
+    border:none;
+    color:#e2e8f0;
+}
+.btn-light:hover{
+    background:#475569;
+    transform:translateY(-1px);
+}
+.loader-overlay{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(10,25,47,0.95);display:flex;align-items:center;justify-content:center;z-index:9999;}
+.loader-spinner{width:50px;height:50px;border:4px solid rgba(34,197,94,0.2);border-top-color:#22c55e;border-radius:50%;animation:spin 0.8s linear infinite;}
+@keyframes spin{to{transform:rotate(360deg);}}
+.toast-msg{position:fixed;bottom:1.5rem;right:1.5rem;background:#1a3a2e;color:#4ade80;padding:0.7rem 1.2rem;border-radius:0.8rem;z-index:3000;transform:translateX(120%);transition:0.3s;}
+.toast-msg.show{transform:translateX(0);}
+select[multiple]{min-height:120px;}
+select[multiple] option{padding:0.5rem;margin:0.2rem 0;border-radius:0.4rem;}
+select[multiple] option:checked{background:#22c55e linear-gradient(0deg, #22c55e, #22c55e);}
+@media(max-width:768px){.sidebar{transform:translateX(-100%);}.topbar,.main-content{margin-left:0;}}
+</style>
+</head>
+<body>
+
+<div id="loaderOverlay" class="loader-overlay"><div class="loader-spinner"></div></div>
+
+<div class="sidebar">
+    <div class="logo"><div><div class="logo-title">LabFlow Nexus</div><div class="logo-sub">Lab System</div></div></div>
+    <nav>
+        <a href="../dashboard.html"><i class="bi bi-speedometer2"></i><span>Dashboard</span></a>
+        <a href="add_patient.html"><i class="bi bi-person-plus"></i><span>Add Patient</span></a>
+        <a href="add_sample.html" class="active"><i class="bi bi-droplet-half"></i><span>Add Sample</span></a>
+    </nav>
+    <div class="sidebar-footer"><a href="../logout.html"><i class="bi bi-box-arrow-right"></i><span>Logout</span></a></div>
+</div>
+
+<div class="topbar">
+    <div class="page-title">Laboratory Workflow System</div>
+    <div class="user-info"><div class="avatar" id="userAvatar">R</div><span class="role-badge" id="userRole">Receptionist</span></div>
+</div>
+
+<div class="main-content">
+    <h3 class="fw-bold mb-3">Create Sample</h3>
+    <div class="card p-4">
+        <form id="sampleForm">
+            <div class="row g-3">
+                <div class="col-md-6">
+                    <label><i class="bi bi-person me-1"></i> Patient</label>
+                    <select id="patientId" class="form-select" required>
+                        <option value="">Loading patients...</option>
+                    </select>
+                </div>
+                <div class="col-md-6">
+                    <label><i class="bi bi-droplet me-1"></i> Sample Type</label>
+                    <input type="text" id="sampleType" class="form-control" placeholder="e.g., Blood, Urine, X-ray, MRI" required>
+                </div>
+                <div class="col-12">
+                    <label><i class="bi bi-clipboard-check me-1"></i> Select Tests (Hold Ctrl/Cmd for multiple)</label>
+                    <select id="testIds" class="form-select" multiple required size="5">
+                        <option>Loading tests...</option>
+                    </select>
+                    <small class="text-muted" style="color:#64748b !important; font-size:0.7rem;">Hold Ctrl (Windows) or Cmd (Mac) to select multiple tests</small>
+                </div>
+            </div>
+            <div class="mt-4 d-flex gap-2">
+                <button type="submit" class="btn btn-success"><i class="bi bi-plus-circle me-1"></i> Create Sample</button>
+                <a href="../dashboard.html" class="btn btn-light"><i class="bi bi-x-circle me-1"></i> Cancel</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div id="toastMsg" class="toast-msg"></div>
+
+<script>
+const role=sessionStorage.getItem('user_role');
+if(!role||role!=='Receptionist') window.location.href='../login.html';
+document.getElementById('userAvatar').innerText='R';
+document.getElementById('userRole').innerText='Receptionist';
+
+function showToast(msg,isErr=false){
+    const t=document.getElementById('toastMsg');
+    t.innerText=msg;
+    t.style.background=isErr?'#3a1a1a':'#1a3a2e';
+    t.style.color=isErr?'#f87171':'#4ade80';
+    t.classList.add('show');
+    setTimeout(()=>t.classList.remove('show'),3000);
+}
+
+async function loadPatients(){
+    try{
+        const res=await fetch('/api/patients');
+        const data=await res.json();
+        if(data.success){
+            const sel=document.getElementById('patientId');
+            sel.innerHTML='<option value="">Select Patient</option>';
+            data.patients.forEach(p=>sel.innerHTML+=`<option value="${p.patient_id}">${p.patient_name}</option>`);
+        }
+    }catch(e){showToast('Error loading patients',true);}
+}
+
+async function loadTests(){
+    try{
+        const res=await fetch('/api/tests-list');
+        const data=await res.json();
+        if(data.success){
+            const sel=document.getElementById('testIds');
+            sel.innerHTML='';
+            data.tests.forEach(t=>sel.innerHTML+=`<option value="${t.test_id}">${t.test_name}</option>`);
+        }
+    }catch(e){showToast('Error loading tests',true);}
+}
+
+document.getElementById('sampleForm').addEventListener('submit',async(e)=>{
+    e.preventDefault();
+    const selected=Array.from(document.getElementById('testIds').selectedOptions).map(opt=>opt.value);
+    const data={patient_id:document.getElementById('patientId').value,sample_type:document.getElementById('sampleType').value,test_ids:selected};
+    if(!data.patient_id||!data.sample_type||!selected.length){showToast('Fill all fields & select at least one test',true);return;}
+    const loader=document.getElementById('loaderOverlay');
+    loader.style.display='flex';
+    try{
+        const res=await fetch('/api/add-sample',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(data)});
+        const result=await res.json();
+        if(result.success){
+            showToast('Sample created successfully!');
+            document.getElementById('sampleForm').reset();
+            setTimeout(()=>window.location.href='add_sample.html',1000);
+        }else showToast('Error: '+result.error,true);
+    }catch(err){showToast('Connection error',true);}
+    finally{setTimeout(()=>loader.style.display='none',500);}
+});
+
+window.onload=()=>{loadPatients();loadTests();setTimeout(()=>{const l=document.getElementById('loaderOverlay');if(l)l.style.display='none';},400);};
+</script>
+</body>
+</html>

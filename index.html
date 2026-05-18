@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LabFlow Nexus | Lab Workflow System</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+    font-family: 'Segoe UI', system-ui, sans-serif;
+    background: linear-gradient(135deg, #0a0f1f 0%, #0f172a 50%, #1a1a3e 100%);
+    color: white;
+    overflow-x: hidden;
+}
+
+/* Navbar */
+.navbar {
+    padding: 1rem 5rem;
+    background: rgba(10, 25, 47, 0.8);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(34, 197, 94, 0.2);
+}
+.navbar-brand {
+    font-size: 1.5rem;
+    font-weight: 700;
+    background: linear-gradient(135deg, #fff, #22c55e);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+.btn-login {
+    background: rgba(34, 197, 94, 0.15);
+    border: 1px solid rgba(34, 197, 94, 0.4);
+    border-radius: 2rem;
+    padding: 0.4rem 1.5rem;
+    color: #22c55e;
+    text-decoration: none;
+    transition: all 0.3s;
+}
+.btn-login:hover {
+    background: #22c55e;
+    color: white;
+    transform: translateY(-2px);
+}
+
+/* Hero Section */
+.hero {
+    min-height: 85vh;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 2rem 6rem;
+    flex-wrap: wrap;
+    gap: 2rem;
+}
+.hero-text { max-width: 550px; }
+.hero h1 { font-size: 3.5rem; font-weight: 800; line-height: 1.2; }
+.gradient-text { background: linear-gradient(135deg, #22c55e, #4ade80); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.hero p { color: #94a3b8; margin-top: 1rem; font-size: 1.1rem; line-height: 1.5; }
+.btn-main {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: linear-gradient(135deg, #22c55e, #16a34a);
+    padding: 0.8rem 2rem;
+    border-radius: 3rem;
+    color: white;
+    text-decoration: none;
+    font-weight: 600;
+    margin-top: 1.5rem;
+    transition: all 0.3s;
+}
+.btn-main:hover { transform: translateY(-3px); box-shadow: 0 10px 25px rgba(34,197,94,0.3); }
+.hero-img { max-width: 300px; animation: float 4s ease-in-out infinite; }
+@keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-15px); }
+}
+
+/* Features */
+.features { padding: 4rem 3rem; text-align: center; }
+.section-title { font-size: 2rem; font-weight: 700; margin-bottom: 2rem; }
+.section-title:after {
+    content: '';
+    display: block;
+    width: 60px;
+    height: 3px;
+    background: #22c55e;
+    margin: 0.5rem auto 0;
+    border-radius: 2px;
+}
+.feature-card {
+    background: rgba(255,255,255,0.05);
+    backdrop-filter: blur(10px);
+    border-radius: 1.2rem;
+    padding: 1.8rem;
+    transition: all 0.3s;
+    border: 1px solid rgba(255,255,255,0.05);
+}
+.feature-card:hover { transform: translateY(-8px); background: rgba(255,255,255,0.08); border-color: rgba(34,197,94,0.3); }
+.feature-icon { font-size: 2.5rem; color: #22c55e; margin-bottom: 1rem; }
+.feature-card h5 { font-size: 1.3rem; margin-bottom: 0.5rem; }
+.feature-card p { color: #94a3b8; font-size: 0.9rem; }
+
+/* Workflow Timeline */
+.workflow {
+    background: rgba(0,0,0,0.3);
+    padding: 4rem 2rem;
+    text-align: center;
+}
+.timeline {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 2rem;
+    max-width: 1000px;
+    margin: 0 auto;
+}
+.step {
+    flex: 1;
+    min-width: 130px;
+    text-align: center;
+}
+.step-circle {
+    width: 60px;
+    height: 60px;
+    background: linear-gradient(135deg, #22c55e, #16a34a);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1rem;
+    font-size: 1.5rem;
+    font-weight: bold;
+    box-shadow: 0 5px 15px rgba(34,197,94,0.3);
+}
+.step-title { font-weight: 600; margin-bottom: 0.3rem; }
+.step-desc { font-size: 0.75rem; color: #94a3b8; }
+
+/* CTA Section */
+.cta {
+    text-align: center;
+    padding: 4rem 2rem;
+}
+.cta h2 { font-size: 2rem; margin-bottom: 1rem; }
+.cta p { color: #94a3b8; margin-bottom: 1.5rem; }
+
+/* Footer */
+.footer {
+    text-align: center;
+    padding: 1.5rem;
+    border-top: 1px solid rgba(255,255,255,0.05);
+    color: #6c86a3;
+    font-size: 0.8rem;
+}
+
+@media (max-width: 768px) {
+    .navbar { padding: 1rem 1.5rem; }
+    .hero { padding: 2rem; flex-direction: column; text-align: center; }
+    .hero h1 { font-size: 2.5rem; }
+    .features { padding: 3rem 1.5rem; }
+    .timeline { flex-direction: column; align-items: center; gap: 1.5rem; }
+    .step { min-width: 200px; }
+}
+</style>
+</head>
+<body>
+
+<nav class="navbar">
+    <div class="container-fluid d-flex justify-content-between align-items-center">
+        <span class="navbar-brand"><i class="fas fa-flask me-2"></i>LabFlow Nexus</span>
+        <a href="login.html" class="btn-login"><i class="fas fa-sign-in-alt me-1"></i>Login</a>
+    </div>
+</nav>
+
+<section class="hero">
+    <div class="hero-text">
+        <h1>
+            Smart <span class="gradient-text" id="typing"></span>
+        </h1>
+        <p>
+            <i class="fas fa-microscope me-2" style="color: #22c55e;"></i>
+            A modern DBMS-powered platform to track samples, manage tests,
+            and ensure complete traceability in laboratory workflows.
+        </p>
+        <a href="login.html" class="btn-main">
+            <i class="fas fa-rocket"></i> Get Started
+        </a>
+    </div>
+    <div>
+        <img src="https://cdn-icons-png.flaticon.com/512/2966/2966480.png" alt="Lab" class="hero-img">
+    </div>
+</section>
+
+<section class="features">
+    <h2 class="section-title">Why Choose LabFlow Nexus?</h2>
+    <div class="container">
+        <div class="row g-4">
+            <div class="col-md-4">
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-link"></i></div>
+                    <h5>Traceability</h5>
+                    <p>Track every sample across all stages seamlessly</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-brain"></i></div>
+                    <h5>Smart DB Design</h5>
+                    <p>ER models, normalization, and data integrity</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-bolt"></i></div>
+                    <h5>Fast Workflow</h5>
+                    <p>Role-based operations for all lab staff</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="workflow">
+    <h2 class="section-title">Workflow Overview</h2>
+    <div class="timeline">
+        <div class="step"><div class="step-circle">1</div><div class="step-title">Patient</div><div class="step-desc">Registration</div></div>
+        <div class="step"><div class="step-circle">2</div><div class="step-title">Sample</div><div class="step-desc">Collection</div></div>
+        <div class="step"><div class="step-circle">3</div><div class="step-title">Test</div><div class="step-desc">Analysis</div></div>
+        <div class="step"><div class="step-circle">4</div><div class="step-title">Result</div><div class="step-desc">Generation</div></div>
+        <div class="step"><div class="step-circle">5</div><div class="step-title">Report</div><div class="step-desc">Approval</div></div>
+    </div>
+</section>
+
+<section class="cta">
+    <h2>Ready to Transform Your Lab?</h2>
+    <p>Join thousands of laboratories using LabFlow Nexus for efficient workflow management.</p>
+    <a href="login.html" class="btn-main"><i class="fas fa-arrow-right"></i> Start Now</a>
+</section>
+
+<footer class="footer">
+    <i class="far fa-copyright me-1"></i> 2026 LabFlow Nexus | Advanced DBMS Project
+</footer>
+
+<script>
+    // Typing Animation
+    const words = ["Laboratory Workflow", "Sample Tracking", "DBMS Intelligence"];
+    let i = 0, j = 0, isDeleting = false;
+    
+    function type() {
+        const display = document.getElementById("typing");
+        if (!display) return;
+        const word = words[i];
+        if (isDeleting) j--;
+        else j++;
+        display.textContent = word.substring(0, j);
+        let speed = isDeleting ? 40 : 80;
+        if (!isDeleting && j === word.length) { isDeleting = true; speed = 1200; }
+        else if (isDeleting && j === 0) { isDeleting = false; i = (i + 1) % words.length; speed = 200; }
+        setTimeout(type, speed);
+    }
+    type();
+
+    // Scroll Reveal
+    const reveals = document.querySelectorAll('.feature-card, .step, .cta');
+    function reveal() {
+        reveals.forEach(el => {
+            const top = el.getBoundingClientRect().top;
+            if (top < window.innerHeight - 100) el.style.opacity = "1";
+            else el.style.opacity = "0";
+        });
+    }
+    reveals.forEach(el => { el.style.transition = "opacity 0.6s"; el.style.opacity = "0"; });
+    window.addEventListener('scroll', reveal);
+    window.addEventListener('load', reveal);
+</script>
+</body>
+</html>
